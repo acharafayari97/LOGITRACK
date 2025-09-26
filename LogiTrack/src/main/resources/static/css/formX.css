@@ -1,0 +1,20 @@
+/* Stili mirati per la pagina form */
+body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; }
+
+.page-header {
+  max-width: 720px; margin: 24px auto 12px;
+  display: flex; gap: 12px; align-items: center; justify-content: space-between;
+  padding: 0 12px;
+}
+
+.card { background:#fff; border:1px solid #e6e6e6; border-radius:12px; padding:16px;
+        max-width:720px; margin:0 auto 32px; }
+
+.form { display:grid; gap:12px; }
+label { display:grid; gap:6px; font-weight:600; }
+input, select, textarea { padding:10px 12px; border:1px solid #e6e6e6; border-radius:10px; font-size:15px; }
+
+.actions { display:flex; gap:10px; justify-content:flex-end; margin-top:8px; }
+.btn { padding:8px 12px; border-radius:8px; background:#2f6feb; color:#fff; text-decoration:none; border:1px solid #2f6feb; }
+.btn.btn-secondary { background:#fff; color:#2f6feb; }
+.btn:hover { filter: brightness(0.95); }

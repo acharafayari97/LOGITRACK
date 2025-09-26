@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title th:text="${cliente.id == null} ? 'Nuovo Cliente' : 'Modifica Cliente'">Cliente</title>
+  <link rel="stylesheet" th:href="@{/css/formX.css}" />
+</head>
+<body>
+
+<header class="page-header">
+  <h1 th:text="${cliente.id == null} ? 'Nuovo Cliente' : 'Modifica Cliente'">Cliente</h1>
+  <a class="btn btn-secondary" th:href="@{/clienti}">← Indietro</a>
+</header>
+
+<section class="card form-card">
+  <form th:action="@{/clienti}" th:object="${cliente}" method="post" class="form">
+    <input type="hidden" th:if="${cliente.id != null}" th:field="*{id}" />
+
+    <label>Ragione sociale
+      <input type="text" th:field="*{ragioneSociale}" required />
+    </label>
+
+    <label>Email
+      <input type="email" th:field="*{email}" />
+    </label>
+
+    <label>Partita IVA
+      <input type="text" th:field="*{partitaIva}" />
+    </label>
+
+    <div class="actions">
+      <button type="submit" class="btn">Salva</button>
+      <a th:href="@{/clienti}" class="btn btn-secondary">Annulla</a>
+    </div>
+  </form>
+</section>
+
+</body>
+</html>

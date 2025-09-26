@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="${prodotto.id == null} ? 'Nuovo Prodotto' : 'Modifica Prodotto'">Prodotto</title>
+    <link rel="stylesheet" th:href="@{/css/formX.css}" />
+</head>
+<body>
+
+<header class="page-header">
+    <h1 th:text="${prodotto.id == null} ? 'Nuovo Prodotto' : 'Modifica Prodotto'">Prodotto</h1>
+    <a class="btn btn-secondary" th:href="@{/prodotti}">← Indietro</a>
+</header>
+
+<section class="card form-card">
+    <form th:action="@{/prodotti}" th:object="${prodotto}" method="post" class="form">
+        <input type="hidden" th:if="${prodotto.id != null}" th:field="*{id}" />
+
+        <label>Id
+            <input type="text" th:field="*{id}" required />
+        </label>
+
+        <label>Nome
+            <input type="text" th:field="*{nome}" required />
+        </label>
+
+        <label>Codice
+            <input type="text" th:field="*{codice}" required />
+        </label>
+
+        <label>Prezzo
+            <input type="number" step="0.01" min="0" max="1000" th:field="*{prezzoUnitario}" required />
+        </label>
+
+        <label>Quantità disponibile
+            <input type="number" step="1" min="0" max="100" th:field="*{quantitaDisponibile}" required />
+        </label>
+
+        <div class="actions">
+            <button type="submit" class="btn">Salva</button>
+            <a th:href="@{/prodotti}" class="btn btn-secondary">Annulla</a>
+        </div>
+    </form>
+</section>
+
+</body>
+</html>

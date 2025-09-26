@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista Clienti</title>
+    <link rel="stylesheet" th:href="@{/css/listX.css}" />
+</head>
+<body>
+
+<header class="page-header">
+    <h1>Clienti</h1>
+    <a class="btn" th:href="@{/clienti/new}">+ Nuovo Cliente</a>
+</header>
+
+<section class="card">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Ragione sociale</th>
+            <th>Email</th>
+            <th>Partita IVA</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${clientiList}">
+            <td th:text="${c.id}">1</td>
+            <td th:text="${c.ragioneSociale}">ACME S.p.A.</td>
+            <td th:text="${c.email}">acme@example.com</td>
+            <td th:text="${c.partitaIva}">IT12345678901</td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(clientiList)}">
+            <td class="empty" colspan="4">Nessun cliente presente</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+</html>

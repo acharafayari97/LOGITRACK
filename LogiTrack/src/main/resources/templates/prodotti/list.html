@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <title>Lista Prodotti</title>
+    <link rel="stylesheet" th:href="@{/css/listX.css}" />
+</head>
+<body>
+
+<header class="page-header">
+    <h1>Prodotti</h1>
+    <a class="btn" th:href="@{/prodotti/new}">+ Nuovo Prodotto</a>
+</header>
+
+<section class="card">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Codice</th>
+            <th>Nome</th>
+            <th>Prezzo</th>
+            <th>IVA</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${prodottiList}">
+            <td th:text="${p.id}">1</td>
+            <td th:text="${p.nome}">Smartphone</td>
+            <td th:text="${p.codice}">2353</td>
+            <td th:text="${p.prezzoUnitario}">299,99$</td>
+            <td th:text="${p.quantitaDisponibile}">2000</td>
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(prodottiList)}">
+            <td class="empty" colspan="5">Nessun prodotto presente</td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+</body>
+</html>

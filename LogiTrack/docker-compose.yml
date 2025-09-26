@@ -1,0 +1,45 @@
+services:
+  db:
+    image: gvenzl/oracle-xe:21-slim
+    container_name: logitrack-db
+    environment:
+      # Password per gli utenti di sistema (SYS/SYSTEM) richiesta dall'immagine
+      ORACLE_PASSWORD: "1997"
+      # Utente applicativo da creare automaticamente
+      APP_USER: "LOGITRACK"
+      APP_USER_PASSWORD: "LOGITRACK"
+    # NIENTE port mapping per evitare conflitti con Oracle locale.
+    # Se vuoi accedere al DB dall'host, sblocca questa riga scegliendo una porta libera:
+    # ports:
+    #   - "11521:1521"
+    volumes:
+      - oradata:/opt/oracle/oradata
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 5s
+      retries: 60
+      start_period: 120s
+
+  app:
+    build: .
+    image: logitrack:latest
+    container_name: logitrack-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # L'app si collega al servizio "db" nella rete interna di Compose
+      SPRING_DATASOURCE_URL: "jdbc:oracle:thin:@//db:1521/XEPDB1"
+      # ⚠️ Devono combaciare con APP_USER/APP_USER_PASSWORD sopra
+      SPRING_DATASOURCE_USERNAME: "LOGITRACK"
+      SPRING_DATASOURCE_PASSWORD: "LOGITRACK"
+      # Percorso migrazioni (rispetta maiuscole/minuscole)
+      SPRING_FLYWAY_LOCATIONS: "classpath:Db.migration"
+      # Più tentativi in attesa che Oracle sia pronto
+      SPRING_FLYWAY_CONNECT_RETRIES: "120"
+    ports:
+      - "8080:8080"   # la tua app sarà su http://localhost:8080
+
+volumes:
+  oradata:
